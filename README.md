@@ -51,7 +51,7 @@ docker-compose up -d --build
 If everything is configured correctly, we should instantly see the UI and be able to open multiple browser tabs at `http://localhost` to chat back and forth in real-time. Good luck!
 
 
-## Project Overview
+Project Overview
 
 This project demonstrates the deployment of a containerized real-time chat application using Docker, Docker Compose, NGINX, GitHub Actions, and AWS EC2.
 
@@ -59,10 +59,10 @@ The objective was to debug an intentionally broken deployment environment by fix
 
 After resolving the deployment issues, the application was successfully deployed on an AWS EC2 instance and automated using a GitHub Actions CI/CD pipeline.
 
-## Architecture
+Architecture
 ![alt text](Architecture.png)
 
-## Container Architecture
+Container Architecture
 
 The application consists of two Docker containers:
 
@@ -79,7 +79,7 @@ The application consists of two Docker containers:
 The containers communicate through the Docker Compose bridge network using service names.
 
 
-## Docker Networking
+Docker Networking
 
 Docker Compose automatically creates a bridge network for all services.
 
@@ -87,9 +87,9 @@ NGINX communicates with the backend using the backend service name instead of lo
 
 This allows inter-container communication without exposing internal services publicly.
 
-## Issues Identified and Fixes
+Issues Identified and Fixes
 
-### Issue 1 – Backend Container Not Reachable
+Issue 1 – Backend Container Not Reachable
 
 Problem:
 The FastAPI server was bound to 127.0.0.1, preventing connections from other Docker containers.
@@ -99,7 +99,7 @@ Updated the Dockerfile to bind Uvicorn to 0.0.0.0.
 
 ---
 
-### Issue 2 – Frontend Not Loading
+Issue 2 – Frontend Not Loading
 
 Problem:
 The frontend volume mount was commented out in docker-compose.yml, causing NGINX to serve its default welcome page.
@@ -109,7 +109,7 @@ Enabled the frontend volume mount so NGINX could serve the application.
 
 ---
 
-### Issue 3 – WebSocket Connection Failed
+Issue 3 – WebSocket Connection Failed
 
 Problem:
 NGINX attempted to proxy WebSocket requests to localhost instead of the backend container.
@@ -120,7 +120,7 @@ Fix:
 Updated proxy_pass to use the backend service name and enabled the required WebSocket upgrade headers.
 
 
-## CI/CD Pipeline
+CI/CD Pipeline
 
 GitHub Actions has been configured to automatically deploy the application to AWS EC2.
 
@@ -135,7 +135,7 @@ Deployment workflow:
 
 This provides automated deployment with minimal manual intervention.
 
-## AWS Deployment
+AWS Deployment
 
 The application is deployed on an AWS EC2 Ubuntu instance.
 
@@ -143,7 +143,7 @@ Services are managed using Docker Compose.
 
 The application is publicly accessible via the EC2 public IP.
 
-## Live Deployment
+Live Deployment
 
 - **GitHub Repository:** https://github.com/kalyanteja18/devops
 - **Application URL:** http://3.110.208.218/
@@ -151,34 +151,34 @@ The application is publicly accessible via the EC2 public IP.
 The application has been successfully deployed on an AWS EC2 Ubuntu instance using Docker Compose. GitHub Actions is configured to automatically deploy the latest changes to the EC2 instance whenever code is pushed to the `main` branch.
 
 
-## Deployment Steps
+Deployment Steps
 
-### 1. Clone the repository
+1. Clone the repository
 
 ```bash
 git clone https://github.com/kalyanteja18/devops.git
 cd devops
 ```
 
-### 2. Build and start the containers
+2. Build and start the containers
 
 ```bash
 docker compose up -d --build
 ```
 
-### 3. Verify the running containers
+3. Verify the running containers
 
 ```bash
 docker ps
 ```
 
-### 4. Access the application
+4. Access the application
 
 Open the following URL in your browser:
 
-**Live Application:** http://3.110.208.218/
+Live Application: http://3.110.208.218/
 
-## Verification
+Verification
 
 The following functionality has been verified:
 
@@ -189,7 +189,7 @@ The following functionality has been verified:
 - Multiple browser tabs can exchange messages in real time
 - GitHub Actions automatically deploys changes to AWS EC2
 
-## Technologies Used
+Technologies Used
 
 - Docker
 - Docker Compose
